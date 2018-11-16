@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анастасия Титова](https://up.htmlacademy.ru/javascript/16/user/146892).
-* Наставник: `Неизвестно`.
+* Наставник: [Магомед Кандаев](https://up.htmlacademy.ru/javascript/16/user/161600).
 
 ---
 
