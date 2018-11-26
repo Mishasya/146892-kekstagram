@@ -3,7 +3,8 @@
 var NUMERAL = 25;
 var MIN_NUMBER_LENGTH = 0;
 var MAX_NUMBER_LENGTH = 24;
-var MIN_PHOTO = 1;
+var MIN_RANDOM = 1;
+var MAX_RANDOM_AVATAR = 5;
 var MIN_LIKES = 15;
 var MAX_LIKES = 199;
 var randomNumber = function (from, to) {
