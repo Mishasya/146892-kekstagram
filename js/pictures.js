@@ -11,10 +11,27 @@ var MAX_LIKES = 199;
 var randomNumber = function (from, to) {
   return Math.round((Math.random() * (to - from + 1)) + from);
 };
+var arr = [];
+var createArr = function(arr,num){
+for (var i = 0; i < num; i++){
+  arr[i] = i + 1
+}
+return arr}
+createArr(arr,NUMERAL);
 
-var numberUrl = [];
+var shuffleArr = function(arr){
+  for (var i= 0; i < arr.length; i++){
+arr.sort(function(){
+  return Math.random() - 0.5;
+}
+)}
+};
+shuffleArr(arr);
+console.log(arr);
 
-while (numberUrl.length < NUMERAL) {
+/*var numberUrl = [];
+
+w*//*hile (numberUrl.length < NUMERAL) {
 
   var urlRate = randomNumber(MIN_NUMBER_LENGTH, MAX_NUMBER_LENGTH);
 
@@ -44,7 +61,7 @@ for (i = 0; i < numberUrl.length; i++) {
   likes[i] = likes[i].toString();
 }
 
-//  Comments and description
+//  Comments and description*/
 
 var commentsMock = [
   'Всё отлично!',
@@ -56,8 +73,17 @@ var commentsMock = [
 ];
 
 var comments = [];
+var createComm = function(){
+  var comments111 = [];
+for (var i = 0; i < 3; i++) {
+    comments111[i] = shuffleArr(commentsMock).slice(0, randomNumber(1, 2)).join(' ');
+  }
+return comments111;
 
-var randomPhrase;
+}
+createComm();
+console.log(comments);
+/*var randomPhrase;
 
 for (i = 0; i < numberUrl.length; i++) {
   randomPhrase = randomNumber(MIN_RANDOM, MAX_RANDOM_PHRASE);
@@ -70,7 +96,7 @@ for (i = 0; i < numberUrl.length; i++) {
     }
   }
 }
-
+*/
 //  description
 
 var descriptionMock = [
@@ -82,9 +108,9 @@ var descriptionMock = [
   'Вот это тачка!'
 ];
 
-var description = [];
+/*var description = [];*/
 
-for (i = 0; i < numberUrl.length; i++) {
+/*for (i = 0; i < numberUrl.length; i++) {
   randomPhrase = randomNumber(MIN_RANDOM, MAX_RANDOM_PHRASE);
   description[i] = descriptionMock[randomPhrase];
 }
@@ -130,11 +156,11 @@ for (i = 0; i < numberUrl.length; i++) {
   fragment.appendChild(link);
 }
 
-photosUsers.appendChild(fragment);
+photosUsers.appendChild(fragment);*/
 
 //  Big photo
 
-i = randomNumber(MIN_RANDOM, MAX_NUMBER_LENGTH);
+/*i = randomNumber(MIN_RANDOM, MAX_NUMBER_LENGTH);
 
 var bigPhoto = document.querySelector('.big-picture');
 bigPhoto.classList.remove('hidden');
@@ -149,6 +175,8 @@ bigPhoto.querySelector('.comments-loader').classList.add('visually-hidden');
 var socialComment = document.querySelectorAll('.social__comment');
 
 for (i = 0; i < socialComment.length; i++) {
-  socialComment[i].querySelector('.social__picture').src = 'img/avatar-' + randomNumber(MAX_NUMBER_LENGTH, MAX_RANDOM_AVATAR) + '.svg';
+  socialComment[i].querySelector('.social__picture').src = 'img/avatar-' + randomNumber(MIN_NUMBER_LENGTH, MAX_RANDOM_AVATAR) + '.svg';
   socialComment[i].querySelector('.social__text').textContent = comments[i];
-}
+}*/
+
+
