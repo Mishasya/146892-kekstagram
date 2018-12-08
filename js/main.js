@@ -32,6 +32,8 @@ var namesMocks = [
 var numberOffObject = 25;
 var MIN_LIKES = 15;
 var MAX_LIKES = 200;
+var MIN_COMMENT_NUMBER = 1;
+var MAX_COMMENT_NUMBER = 5;
 var MIN_AVATAR = 1;
 var MAX_AVATAR = 6;
 var fragment = document.createDocumentFragment();
@@ -46,68 +48,43 @@ var generateRandomNumber = function (min, max) {
 };
 
 
-var shuffleRandomArr = function (arr) {
-  for (var i = arr.length - 1; i > 0; i--) {
-    var random = Math.floor(Math.random() * (i + 1));
-    var temp = arr[i];
-    arr[i] = arr[random];
-    arr[random] = temp;
-  }
-  return arr;
-};
-
-
-var generateRandomComments = function (arr) {
-  comments = [];
-  for (var i = 0; i < numberOffObject; i++) {
-    comments[i] = shuffleRandomArr(arr).slice(0, generateRandomNumber(1, 2));
-  }
-  return comments;
-};
-
-var comments = generateRandomComments(commentsMocks);
-
-
 var generateRandomElement = function (arr) {
   return arr[generateRandomNumber(0, arr.length - 1)];
 };
 
 
 var generateRandomUrl = function (number) {
-  urlArrNumbers = [];
+  var arrAdresses = [];
   for (var i = 0; i < number; i++) {
-    urlArrNumbers[i] = i + 1;
+    arrAdresses[i] = i + 1;
   }
-  return urlArrNumbers;
+  return arrAdresses;
 };
 
 var urlArrNumbers = generateRandomUrl(numberOffObject);
 
 
 var generateArrObjectComments = function () {
-  commentsArrObject = {
+  var arrObjectsReports = {
     avatar: 'img/avatar-' + generateRandomNumber(MIN_AVATAR, MAX_AVATAR) + '.svg',
     message: generateRandomElement(commentsMocks),
     name: generateRandomElement(namesMocks)
   };
-  return commentsArrObject;
+  return arrObjectsReports;
 };
-
-var commentsArrObject = generateArrObjectComments();
 
 
 var generateArrObjectsPhoto = function (number) {
-  arrObjectsPhotos = [];
+  var arrPhotos = [];
   for (var i = 0; i < number; i++) {
-    arrObjectsPhotos[i] = {
+    arrPhotos[i] = {
       url: 'photos/' + urlArrNumbers[i] + '.jpg',
       likes: generateRandomNumber(MIN_LIKES, MAX_LIKES),
-      comments: generateArrObjectComments(number)
+      comments: generateArrObjectComments()
     };
   }
-  return arrObjectsPhotos;
+  return arrPhotos;
 };
-
 var arrObjectsPhotos = generateArrObjectsPhoto(numberOffObject);
 
 
@@ -121,29 +98,20 @@ var createPicture = function (element) {
   return pictureElement;
 };
 
-var renderPictures = function (arr) {
-
-  for (var i = 0; i < arr.length; i++) {
-    fragment.appendChild(createPicture(arrObjectsPhotos[i]));
-  }
-  return fragment;
-};
-picturesContainer.appendChild(renderPictures(arrObjectsPhotos));
-
 
 var showBigPicture = function (firstArrEl) {
   var bigPicture = document.querySelector('.big-picture');
 
   bigPicture.classList.remove('hidden');
-  bigPicture.querySelector('.big-picture__img').src = firstArrEl.url;
+  bigPicture.querySelector('.big-picture__img img').src = firstArrEl.url;
   bigPicture.querySelector('.likes-count').textContent = firstArrEl.likes;
   bigPicture.querySelector('.comments-count').textContent = firstArrEl.comments.length;
   bigPicture.querySelector('.social__caption').textContent = generateRandomElement(descriptionMocks);
 
   return bigPicture;
 };
-
 showBigPicture(arrObjectsPhotos[0]);
+
 
 while (commentsContainer.firstChild) {
   commentsContainer.removeChild(commentsContainer.firstChild);
@@ -151,7 +119,7 @@ while (commentsContainer.firstChild) {
 
 
 var renderCommentsBigPicture = function () {
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < generateRandomNumber(MIN_COMMENT_NUMBER, MAX_COMMENT_NUMBER); i++) {
 
     var commentElement = commentNode.cloneNode(true);
 
@@ -159,10 +127,22 @@ var renderCommentsBigPicture = function () {
     commentElement.querySelector('.social__text').textContent = generateRandomElement(commentsMocks);
     fragment.appendChild(commentElement);
   }
-  return commentElement;
+  return fragment;
 };
-renderCommentsBigPicture();
-commentsContainer.appendChild(fragment);
+
+
+var renderPictures = function (arr) {
+  var fragmentPhoto = document.createDocumentFragment();
+
+  arr.forEach(function (item, i) {
+    fragmentPhoto.appendChild(createPicture(arrObjectsPhotos[i]));
+  });
+  renderCommentsBigPicture();
+  commentsContainer.appendChild(fragment);
+  return fragmentPhoto;
+};
+picturesContainer.appendChild(renderPictures(arrObjectsPhotos));
+
 
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
