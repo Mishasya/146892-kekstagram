@@ -52,13 +52,24 @@ var generateRandomElement = function (arr) {
   return arr[generateRandomNumber(0, arr.length - 1)];
 };
 
+var shuffleRandomArr = function (arr) {
+  var incomingArr = arr;
+  for (var i = incomingArr.length - 1; i > 0; i--) {
+    var random = Math.floor(Math.random() * (i + 1));
+    var temp = incomingArr[i];
+    incomingArr[i] = incomingArr[random];
+    incomingArr[random] = temp;
+  }
+  return incomingArr;
+};
+
 
 var generateRandomUrl = function (number) {
   var arrAdresses = [];
   for (var i = 0; i < number; i++) {
     arrAdresses[i] = i + 1;
   }
-  return arrAdresses;
+  return shuffleRandomArr(arrAdresses);
 };
 
 var urlArrNumbers = generateRandomUrl(numberOffObject);
