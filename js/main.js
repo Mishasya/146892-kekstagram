@@ -42,6 +42,7 @@ var templatePicture = document.querySelector('#picture').content.querySelector('
 var picturesContainer = document.querySelector('.pictures');
 var commentsContainer = document.querySelector('.social__comments');
 var commentNode = commentsContainer.querySelector('.social__comment');
+var bigPicture = document.querySelector('.big-picture');
 
 
 var generateRandomNumber = function (min, max) {
@@ -112,7 +113,7 @@ var createPicture = function (element) {
 
 
 var showBigPicture = function (firstArrEl) {
-  var bigPicture = document.querySelector('.big-picture');
+
 
   bigPicture.classList.remove('hidden');
   bigPicture.querySelector('.big-picture__img img').src = firstArrEl.url;
@@ -120,14 +121,9 @@ var showBigPicture = function (firstArrEl) {
   bigPicture.querySelector('.comments-count').textContent = firstArrEl.comments.length;
   bigPicture.querySelector('.social__caption').textContent = generateRandomElement(descriptionMocks);
 
-  bigPicture.querySelector('.big-picture__cancel').addEventListener('click', function () {
-    bigPicture.classList.add('hidden');
-  });
-
   return bigPicture;
 };
 
-// showBigPicture(arrObjectsPhotos[0]);
 
 while (commentsContainer.firstChild) {
   commentsContainer.removeChild(commentsContainer.firstChild);
@@ -160,19 +156,36 @@ var renderPictures = function (arr) {
 picturesContainer.appendChild(renderPictures(arrObjectsPhotos));
 
 var minPicture = document.querySelectorAll('.picture');
+var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
 // Клик по миниатюре, открытие большой фотографии
 
-var openBigPhoto = function (minPhoto) {
+var openBigPhoto = function (minPhoto, num) {
   minPhoto.addEventListener('click', function () {
     document.querySelector('body').classList.add('modal-open');
-    showBigPicture(arrObjectsPhotos[0]); // нулевой элемент, чтоб хоть как-то работало...
+    showBigPicture(arrObjectsPhotos[num]);
+    document.addEventListener('keydown', onCloseBigPictureEsc);
   });
 };
 
-for (var i = 0; i < minPicture.length; i++) {
-  openBigPhoto(minPicture[i]);
+for (var k = 0; k < minPicture.length; k++) {
+  openBigPhoto(minPicture[k], k);
 }
+
+var onCloseBigPictureEsc = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeBigPhoto();
+  }
+};
+
+var closeBigPhoto = function () {
+  bigPicture.classList.add('hidden');
+  document.removeEventListener('keydown', onCloseBigPictureEsc);
+};
+
+bigPictureCancel.addEventListener('click', function () {
+  closeBigPhoto();
+});
 
 
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
@@ -187,6 +200,7 @@ var armChangeDeepPicture = formEditPicture.querySelector('.effect-level__pin');
 var effectLevelDepth = formEditPicture.querySelector('.effect-level__depth');
 var slider = formEditPicture.querySelector('.img-upload__effect-level');
 var imgUploadPreview = formEditPicture.querySelector('.img-upload__preview img');
+var imgUploadPreviewInner = formEditPicture.querySelector('.img-upload__preview');
 var radiobuttonsEffect = formEditPicture.querySelectorAll('.effects__radio');
 var imgUploadClasses = [
   'effects__preview--no-filter',
@@ -201,6 +215,7 @@ var imgUploadClasses = [
 var onFormEditPictureEscClose = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closeFormEditPicture();
+    openBigPhoto();
   }
 };
 
@@ -234,7 +249,7 @@ var onBtnEffectClick = function (radiobutton, classEffect) {
     armChangeDeepPicture.style.left = '100%';
     effectLevelDepth.style.width = '100%';
     scaleControlValue.value = '100%';
-    imgUploadPreview.style.transform = 'scale(1)';
+    imgUploadPreviewInner.style.transform = 'scale(1)';
 
     if (classEffect === 'effects__preview--no-filter') {
       slider.classList.add('hidden');
@@ -327,7 +342,7 @@ var reduceScalePhoto = function () {
   if (parseInt(scaleControlValue.value, 10) > MIN_VALUE_SCALE) {
     var actualValue = parseInt(scaleControlValue.value, 10) - STEP_SCALE + '%';
     scaleControlValue.value = actualValue;
-    imgUploadPreview.style.transform = 'scale(' + parseInt(actualValue, 10) / 100 + ')';
+    imgUploadPreviewInner.style.transform = 'scale(' + parseInt(actualValue, 10) / 100 + ')';
   }
 };
 
@@ -335,7 +350,7 @@ var increaseScalePhoto = function () {
   if (parseInt(scaleControlValue.value, 10) < MAX_VALUE_SCALE) {
     var actualValue = parseInt(scaleControlValue.value, 10) + STEP_SCALE + '%';
     scaleControlValue.value = actualValue;
-    imgUploadPreview.style.transform = 'scale(' + parseInt(actualValue, 10) / 100 + ')';
+    imgUploadPreviewInner.style.transform = 'scale(' + parseInt(actualValue, 10) / 100 + ')';
   }
 };
 
