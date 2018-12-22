@@ -376,18 +376,17 @@ var textDescription = formEditPicture.querySelector('.text__description');
 var MIN_LENGTH_HASHTAG = 2;
 var MAX_LENGTH_HASHTAG = 20;
 var MAX_COUNT_HASHTAG = 5;
-var imgUploadSubmit = formEditPicture.querySelector('.img-upload__submit');
 
 var highlightInvalidFields = function () {
   textHashtags.style.outline = '3px solid rgb(255, 0, 0)';
-}
+};
 
 
 var validatesHashtags = function () {
   textHashtags.addEventListener('input', function () {
     var textHashtagsArr = textHashtags.value.split(' ');
 
-    if (textHashtagsArr.length > 5) {
+    if (textHashtagsArr.length > MAX_COUNT_HASHTAG) {
       textHashtags.setCustomValidity('Не более 5 хэш-тегов');
     } else {
       textHashtags.setCustomValidity('');
@@ -405,8 +404,8 @@ var validatesHashtags = function () {
         textHashtags.setCustomValidity('Хэш-теги должны отделяться знаком пробел');
       }
 
-      for (var j = i; j < textHashtagsArr.length - 1; j++) {
-        if (textHashtagsArr[j + 1].toLowerCase() === textHashtagsArr[j].toLowerCase()) {
+      for (var m = i; m < textHashtagsArr.length - 1; m++) {
+        if (textHashtagsArr[m + 1].toLowerCase() === textHashtagsArr[m].toLowerCase()) {
           textHashtags.setCustomValidity('Упс, такой хэш-тег уже есть');
         }
       }
@@ -477,14 +476,3 @@ var closeSuccessMessage = function () {
 };
 
 imgUploadForm.addEventListener('submit', showMessageOfSuccessfulDispatch);
-
-
-
-
-
-
-
-
-
-
-
