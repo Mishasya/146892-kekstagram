@@ -211,17 +211,23 @@ var imgUploadClasses = [
   'effects__preview--heat'
 ];
 
-
-var onFormEditPictureEscClose = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closeFormEditPicture();
-    openBigPhoto();
-  }
+var resetToDefaultValue = function () {
+  imgUploadPreview.removeAttribute('class');
+  slider.classList.add('hidden');
+  imgUploadPreviewInner.style.transform = 'scale(1)';
+  scaleControlValue.value = '100%';
 };
 
 var openFormEditPicture = function () {
   formEditPicture.classList.remove('hidden');
+  resetToDefaultValue();
   document.addEventListener('keydown', onFormEditPictureEscClose);
+};
+
+var onFormEditPictureEscClose = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeFormEditPicture();
+  }
 };
 
 var closeFormEditPicture = function () {
@@ -243,7 +249,7 @@ var onBtnEffectClick = function (radiobutton, classEffect) {
 
   slider.classList.add('hidden');
   radiobutton.addEventListener('click', function () {
-    imgUploadPreview.style.removeProperty('filter');
+    imgUploadPreview.style.filter = '';
     imgUploadPreview.removeAttribute('class');
     imgUploadPreview.setAttribute('class', classEffect);
     armChangeDeepPicture.style.left = '100%';
@@ -361,3 +367,112 @@ scaleControlSmaller.addEventListener('click', function () {
 scaleControlBigger.addEventListener('click', function () {
   increaseScalePhoto();
 });
+
+
+// Validity
+
+var textHashtags = formEditPicture.querySelector('.text__hashtags');
+var textDescription = formEditPicture.querySelector('.text__description');
+var MIN_LENGTH_HASHTAG = 2;
+var MAX_LENGTH_HASHTAG = 20;
+var MAX_COUNT_HASHTAG = 5;
+
+var highlightInvalidFields = function () {
+  textHashtags.style.outline = '3px solid rgb(255, 0, 0)';
+};
+
+
+var validatesHashtags = function () {
+  textHashtags.addEventListener('input', function () {
+    var textHashtagsArr = textHashtags.value.split(' ');
+
+    if (textHashtagsArr.length > MAX_COUNT_HASHTAG) {
+      textHashtags.setCustomValidity('Не более 5 хэш-тегов');
+    } else {
+      textHashtags.setCustomValidity('');
+    }
+
+    for (var i = 0; i < textHashtagsArr.length; i++) {
+
+      if (textHashtagsArr[i].length > MAX_LENGTH_HASHTAG) {
+        textHashtags.setCustomValidity('Хэш-тег не может быть длиннее 20-ти символов');
+      } else if (textHashtagsArr[i].length < MIN_LENGTH_HASHTAG && textHashtagsArr[i].indexOf('#') === 0) {
+        textHashtags.setCustomValidity('Хэш-тег не может состоять только из #');
+      } else if (textHashtagsArr[i].indexOf('#') !== 0) {
+        textHashtags.setCustomValidity('Хэш-тег должен начинаться с символа #');
+      } else if (textHashtagsArr[i].indexOf('#', 1) !== -1) {
+        textHashtags.setCustomValidity('Хэш-теги должны отделяться знаком пробел');
+      }
+
+      for (var m = i; m < textHashtagsArr.length - 1; m++) {
+        if (textHashtagsArr[m + 1].toLowerCase() === textHashtagsArr[m].toLowerCase()) {
+          textHashtags.setCustomValidity('Упс, такой хэш-тег уже есть');
+        }
+      }
+    }
+  });
+};
+validatesHashtags();
+
+textHashtags.addEventListener('invalid', function () {
+  highlightInvalidFields();
+});
+
+var closeEditPictureWhereBlurInput = function () {
+  document.addEventListener('keydown', onFormEditPictureEscClose);
+};
+
+var keepOpenSoFarFocusInput = function () {
+  document.removeEventListener('keydown', onFormEditPictureEscClose);
+};
+
+textHashtags.addEventListener('focus', function () {
+  keepOpenSoFarFocusInput();
+});
+
+textHashtags.addEventListener('blur', function () {
+  closeEditPictureWhereBlurInput();
+  textHashtags.style.outline = '3px solid rgb(0, 0, 0)';
+});
+
+textDescription.addEventListener('focus', function () {
+  keepOpenSoFarFocusInput();
+});
+
+textDescription.addEventListener('blur', function () {
+  closeEditPictureWhereBlurInput();
+});
+
+var success = document.querySelector('#success').content.querySelector('.success');
+var main = document.querySelector('main');
+var imgUploadForm = picturesContainer.querySelector('.img-upload__form');
+var successButton = success.querySelector('.success__button');
+var successFragment = main.appendChild(success);
+successFragment.classList.add('visually-hidden');
+
+var showMessageOfSuccessfulDispatch = function (evt) {
+  evt.preventDefault();
+  successFragment.classList.remove('visually-hidden');
+  formEditPicture.classList.add('hidden');
+  resetToDefaultValue();
+  uploadFile.value = '';
+  textHashtags.value = '';
+  textDescription.value = '';
+
+  document.addEventListener('click', closeSuccessMessage);
+  document.addEventListener('keydown', onSuccessMessageEscClose);
+  successButton.addEventListener('click', closeSuccessMessage);
+};
+
+var onSuccessMessageEscClose = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeSuccessMessage();
+  }
+};
+
+var closeSuccessMessage = function () {
+  successFragment.classList.add('visually-hidden');
+  document.removeEventListener('keydown', onSuccessMessageEscClose);
+};
+
+imgUploadForm.addEventListener('submit', showMessageOfSuccessfulDispatch);
