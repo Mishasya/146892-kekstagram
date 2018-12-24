@@ -273,7 +273,7 @@ var effectLevelLine = formEditPicture.querySelector('.effect-level__line');
 var effectLevelValue = formEditPicture.querySelector('.effect-level__value');
 var WIDTH_PIN = 18;
 
-
+// slider
 armChangeDeepPicture.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
 
