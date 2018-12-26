@@ -10,7 +10,7 @@
     bigPicture.querySelector('.big-picture__img img').src = firstArrEl.url;
     bigPicture.querySelector('.likes-count').textContent = firstArrEl.likes;
     bigPicture.querySelector('.comments-count').textContent = firstArrEl.comments.length;
-    bigPicture.querySelector('.social__caption').textContent = window.utils.generateRandomElement(window.utils.descriptionMocks);
+    bigPicture.querySelector('.social__caption').textContent = window.utils.generateRandomElement(window.data.descriptionMocks);
 
     return bigPicture;
   };

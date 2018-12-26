@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var textHashtags = window.openEditPicture.formEditPicture.querySelector('.text__hashtags');
-  var textDescription = window.openEditPicture.formEditPicture.querySelector('.text__description');
+  var textHashtags = window.photoEdit.formEditPicture.querySelector('.text__hashtags');
+  var textDescription = window.photoEdit.formEditPicture.querySelector('.text__description');
   var MIN_LENGTH_HASHTAG = 2;
   var MAX_LENGTH_HASHTAG = 20;
   var MAX_COUNT_HASHTAG = 5;
@@ -48,11 +48,11 @@
   });
 
   var closeEditPictureWhereBlurInput = function () {
-    document.addEventListener('keydown', window.openEditPicture.onFormEditPictureEscClose);
+    document.addEventListener('keydown', window.photoEdit.onFormEditPictureEscClose);
   };
 
   var keepOpenSoFarFocusInput = function () {
-    document.removeEventListener('keydown', window.openEditPicture.onFormEditPictureEscClose);
+    document.removeEventListener('keydown', window.photoEdit.onFormEditPictureEscClose);
   };
 
   textHashtags.addEventListener('focus', function () {

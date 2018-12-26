@@ -7,7 +7,7 @@
     return Math.floor(min + Math.random() * (max + 1 - min));
   };
 
-  var generateRandomElement = function (array) {  // Ошибка
+  var generateRandomElement = function (array) {
     return array[generateRandomNumber(0, array.length - 1)];
   };
 

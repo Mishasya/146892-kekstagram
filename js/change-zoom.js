@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  var scaleControlSmaller = window.openEditPicture.formEditPicture.querySelector('.scale__control--smaller');
-  var scaleControlBigger = window.openEditPicture.formEditPicture.querySelector('.scale__control--bigger');
-  var scaleControlValue = window.openEditPicture.formEditPicture.querySelector('.scale__control--value');
-  var imgUploadPreviewInner = window.openEditPicture.formEditPicture.querySelector('.img-upload__preview');
+  var scaleControlSmaller = window.photoEdit.formEditPicture.querySelector('.scale__control--smaller');
+  var scaleControlBigger = window.photoEdit.formEditPicture.querySelector('.scale__control--bigger');
+  var scaleControlValue = window.photoEdit.formEditPicture.querySelector('.scale__control--value');
+  var imgUploadPreviewInner = window.photoEdit.formEditPicture.querySelector('.img-upload__preview');
   scaleControlValue.value = '100%';
   var STEP_SCALE = 25;
   var MIN_VALUE_SCALE = 25;
@@ -35,7 +35,7 @@
     increaseScalePhoto();
   });
 
-  window.scale = {
+  window.changeZoom = {
     imgUploadPreviewInner: imgUploadPreviewInner,
     scaleControlValue: scaleControlValue
   };

@@ -21,8 +21,8 @@
   var resetToDefaultValue = function () {
     imgUploadPreview.removeAttribute('class');
     slider.classList.add('hidden');
-    window.scale.imgUploadPreviewInner.style.transform = 'scale(1)';
-    window.scale.scaleControlValue.value = '100%';
+    window.changeZoom.imgUploadPreviewInner.style.transform = 'scale(1)';
+    window.changeZoom.scaleControlValue.value = '100%';
   };
 
   var openFormEditPicture = function () {
@@ -63,8 +63,8 @@
       imgUploadPreview.setAttribute('class', classEffect);
       window.dragndropEffects.armChangeDeepPicture.style.left = '100%';
       window.dragndropEffects.effectLevelDepth.style.width = '100%';
-      window.scale.scaleControlValue.value = '100%';
-      window.scale.imgUploadPreviewInner.style.transform = 'scale(1)';
+      window.changeZoom.scaleControlValue.value = '100%';
+      window.changeZoom.imgUploadPreviewInner.style.transform = 'scale(1)';
 
       if (classEffect === 'effects__preview--no-filter') {
         slider.classList.add('hidden');
@@ -78,7 +78,7 @@
     onBtnEffectClick(radiobuttonsEffect[j], imgUploadClasses[j]);
   }
 
-  window.openEditPicture = {
+  window.photoEdit = {
     uploadFile: uploadFile,
     imgUploadPreview: imgUploadPreview,
     formEditPicture: formEditPicture,
