@@ -1,56 +1,17 @@
 'use strict';
 
 (function () {
-  var numberOffObject = 25;
-  var MIN_AVATAR = 1;
-  var MAX_AVATAR = 6;
-  var MIN_LIKES = 15;
-  var MAX_LIKES = 200;
-  var MIN_COMMENT_NUMBER = 1;
-  var MAX_COMMENT_NUMBER = 5;
-  var fragment = document.createDocumentFragment();
+  var serverPhotos = [];
   var picturesContainer = document.querySelector('.pictures');
   var commentsContainer = document.querySelector('.social__comments');
   var templatePicture = document.querySelector('#picture').content.querySelector('.picture');
-  var commentNode = commentsContainer.querySelector('.social__comment');
+  var MIN_COMMENT_NUMBER = 1;
+  // var MAX_COMMENT_NUMBER = 5;
+  var commentsNode = commentsContainer.querySelector('.social__comment');
 
-  var generateArrObjectComments = function () {
-    var arrObjectsReports = {
-      avatar: 'img/avatar-' + window.utils.generateRandomNumber(MIN_AVATAR, MAX_AVATAR) + '.svg',
-      message: window.utils.generateRandomElement(window.data.commentsMocks),
-      name: window.utils.generateRandomElement(window.data.namesMocks)
-    };
-
-    return arrObjectsReports;
-  };
-
-  var generateRandomUrl = function (number) {
-    var arrAdresses = [];
-    for (var i = 0; i < number; i++) {
-      arrAdresses[i] = i + 1;
-    }
-
-    return window.utils.shuffleRandomArr(arrAdresses);
-  };
-
-  var urlArrNumbers = generateRandomUrl(numberOffObject);
-
-
-  var generateArrObjectsPhoto = function (number) {
-    var arrPhotos = [];
-    for (var i = 0; i < number; i++) {
-      arrPhotos[i] = {
-        url: 'photos/' + urlArrNumbers[i] + '.jpg',
-        likes: window.utils.generateRandomNumber(MIN_LIKES, MAX_LIKES),
-        comments: generateArrObjectComments()
-      };
-    }
-
-    return arrPhotos;
-  };
-
-  var arrObjectsPhotos = generateArrObjectsPhoto(numberOffObject);
-
+  while (commentsContainer.firstChild) {
+    commentsContainer.removeChild(commentsContainer.firstChild);
+  }
 
   var createPicture = function (element) {
     var pictureElement = templatePicture.cloneNode(true);
@@ -59,40 +20,54 @@
     pictureElement.querySelector('.picture__likes').textContent = element.likes;
     pictureElement.querySelector('.picture__comments').textContent = element.comments.length;
 
+
+    pictureElement.addEventListener('click', function () {
+      window.bigPicture.openBigPhoto();
+      window.bigPicture.showBigPicture(element);
+
+    });
+
     return pictureElement;
   };
 
-  while (commentsContainer.firstChild) {
-    commentsContainer.removeChild(commentsContainer.firstChild);
-  }
+  var renderCommentsBigPicture = function (element) {
+    var commentsFragment = document.createDocumentFragment();
 
-  var renderCommentsBigPicture = function () {
-    for (var i = 0; i < window.utils.generateRandomNumber(MIN_COMMENT_NUMBER, MAX_COMMENT_NUMBER); i++) {
-
-      var commentElement = commentNode.cloneNode(true);
-
-      commentElement.querySelector('.social__picture').src = 'img/avatar-' + window.utils.generateRandomNumber(MIN_AVATAR, MAX_AVATAR) + '.svg';
-      commentElement.querySelector('.social__text').textContent = window.utils.generateRandomElement(window.data.commentsMocks);
-      fragment.appendChild(commentElement);
+    for (var i = 0; i < MIN_COMMENT_NUMBER; i++) {
+      var commentsElement = commentsNode.cloneNode(true);
+      commentsElement.querySelector('img').src = element.comments[i].avatar;
+      commentsElement.querySelector('p').textContent = element.comments[i].message;
+      commentsFragment.appendChild(commentsElement);
     }
-    return fragment;
+
+    return commentsContainer.appendChild(commentsFragment);
   };
 
   var renderPictures = function (arr) {
     var fragmentPhoto = document.createDocumentFragment();
 
-    arr.forEach(function (item, i) {
-      fragmentPhoto.appendChild(createPicture(arrObjectsPhotos[i]));
+    arr.forEach(function (item) {
+      fragmentPhoto.appendChild(createPicture(item));
     });
-    renderCommentsBigPicture();
-    commentsContainer.appendChild(fragment);
-    return fragmentPhoto;
+    picturesContainer.appendChild(fragmentPhoto);
   };
 
-  picturesContainer.appendChild(renderPictures(arrObjectsPhotos));
+  var onLoad = function (data) {
+    serverPhotos = data;
+    renderPictures(serverPhotos);
+  };
+
+
+  var onError = function (showMessageOfError) {
+    showMessageOfError();
+  };
+
+  window.backend.download(onLoad, onError);
 
   window.gallery = {
     picturesContainer: picturesContainer,
-    arrObjectsPhotos: arrObjectsPhotos
+    renderPictures: renderPictures,
+    serverPhotos: serverPhotos,
+    renderCommentsBigPicture: renderCommentsBigPicture
   };
 })();
