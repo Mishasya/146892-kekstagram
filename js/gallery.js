@@ -59,7 +59,7 @@
 
 
   var onError = function () {
-    showMessageOfError();
+    window.messageForm.showMessageOfError();
   };
 
   window.backend.download(onLoad, onError);

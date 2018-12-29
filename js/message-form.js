@@ -62,4 +62,8 @@
     imgUploadForm.reset();
   });
 
+
+  window.messageForm = {
+    showMessageOfError: showMessageOfError
+  };
 })();
