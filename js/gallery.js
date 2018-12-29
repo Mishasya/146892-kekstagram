@@ -58,7 +58,7 @@
   };
 
 
-  var onError = function (showMessageOfError) {
+  var onError = function () {
     showMessageOfError();
   };
 
