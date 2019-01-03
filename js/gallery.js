@@ -7,7 +7,7 @@
   var templatePicture = document.querySelector('#picture').content.querySelector('.picture');
   var imgFilter = document.querySelector('.img-filters');
   var MAX_COMMENT_NUMBER = 5;
-  var DEBOUNCE_INTERVAL = 300;
+  var DEBOUNCE_INTERVAL = 500;
   var commentsNode = commentsContainer.querySelector('.social__comment');
 
   while (commentsContainer.firstChild) {
