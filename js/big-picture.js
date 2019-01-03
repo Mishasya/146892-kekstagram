@@ -12,7 +12,7 @@
     bigPicture.querySelector('.comments-count').textContent = elem.comments.length;
     bigPicture.querySelector('.social__caption').textContent = elem.description;
 
-    window.gallery.renderCommentsBigPicture(elem);
+    window.gallery.showCommentsBigPicture(elem.comments);
 
     return bigPicture;
   };
