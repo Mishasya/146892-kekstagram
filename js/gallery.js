@@ -46,7 +46,9 @@
     elements.forEach(function (item, index) {
       var comment = createCommentBigPicture(item);
 
-      index >= MAX_COMMENT_NUMBER ? comment.classList.add('visually-hidden') : MAX_COMMENT_NUMBER;
+      if (index >= MAX_COMMENT_NUMBER) {
+        comment.classList.add('visually-hidden');
+      }
 
       commentsFragment.appendChild(comment);
     });

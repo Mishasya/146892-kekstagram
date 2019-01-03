@@ -5,10 +5,10 @@
   var scaleControlBigger = window.photoEdit.formEditPicture.querySelector('.scale__control--bigger');
   var scaleControlValue = window.photoEdit.formEditPicture.querySelector('.scale__control--value');
   var imgUploadPreviewInner = window.photoEdit.formEditPicture.querySelector('.img-upload__preview');
-  scaleControlValue.value = '100%';
   var STEP_SCALE = 25;
   var MIN_VALUE_SCALE = 25;
   var MAX_VALUE_SCALE = 100;
+  scaleControlValue.value = '100%';
 
   var reduceScalePhoto = function () {
 
