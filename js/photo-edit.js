@@ -16,10 +16,9 @@
     'effects__preview--heat'
   ];
 
-  // Сброс фильтров к начальному состоянию
-
   var resetToDefaultValue = function () {
     imgUploadPreview.removeAttribute('class');
+    imgUploadPreview.style.filter = null;
     slider.classList.add('hidden');
     window.changeZoom.imgUploadPreviewInner.style.transform = 'scale(1)';
     window.changeZoom.scaleControlValue.value = '100%';
