@@ -12,8 +12,6 @@
     bigPicture.querySelector('.comments-count').textContent = elem.comments.length;
     bigPicture.querySelector('.social__caption').textContent = elem.description;
 
-    window.gallery.showCommentsBigPicture(elem.comments);
-
     return bigPicture;
   };
 
@@ -37,11 +35,9 @@
     closeBigPhoto();
   });
 
-  document.querySelector('.social__comment-count').classList.add('visually-hidden');
-  document.querySelector('.comments-loader').classList.add('visually-hidden');
-
-  window.bigPicture = {
+  window.preview = {
     showBigPicture: showBigPicture,
-    openBigPhoto: openBigPhoto
+    openBigPhoto: openBigPhoto,
+    bigPicture: bigPicture
   };
 })();
