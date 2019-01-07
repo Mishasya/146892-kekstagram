@@ -2,7 +2,7 @@
 
 (function () {
 
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'mp4'];
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   window.photoEdit.uploadFile.addEventListener('change', function () {
     var file = window.photoEdit.uploadFile.files[0];
