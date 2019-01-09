@@ -35,7 +35,7 @@
 
         for (var m = 0; m < textHashtagsArr.length; m++) {
           for (var l = m + 1; l < textHashtagsArr.length; l++) {
-            if (textHashtagsArr[l] === textHashtagsArr[m]) {
+            if (textHashtagsArr[l].toLowerCase() === textHashtagsArr[m].toLowerCase()) {
               textHashtags.setCustomValidity('Упс, такой хэш-тег уже есть');
             }
           }
