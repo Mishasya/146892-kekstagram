@@ -33,9 +33,11 @@
           textHashtags.setCustomValidity('Хэш-теги должны отделяться знаком пробел');
         }
 
-        for (var m = i; m < textHashtagsArr.length - 1; m++) {
-          if (textHashtagsArr[m + 1].toLowerCase() === textHashtagsArr[m].toLowerCase()) {
-            textHashtags.setCustomValidity('Упс, такой хэш-тег уже есть');
+        for (var m = 0; m < textHashtagsArr.length; m++) {
+          for (var l = m + 1; l < textHashtagsArr.length; l++) {
+            if (textHashtagsArr[l] === textHashtagsArr[m]) {
+              textHashtags.setCustomValidity('Упс, такой хэш-тег уже есть');
+            }
           }
         }
       }

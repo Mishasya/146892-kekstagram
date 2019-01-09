@@ -7,7 +7,7 @@
   var imgUploadPreview = formEditPicture.querySelector('.img-upload__preview img');
   var slider = formEditPicture.querySelector('.img-upload__effect-level');
   var radiobuttonsEffect = formEditPicture.querySelectorAll('.effects__radio');
-  var imgUploadClasses = [
+  var IMG_UPLOAD_CLASSES = [
     'effects__preview--no-filter',
     'effects__preview--chrome',
     'effects__preview--sepia',
@@ -74,7 +74,7 @@
   };
 
   for (var j = 0; j < radiobuttonsEffect.length; j++) {
-    onBtnEffectClick(radiobuttonsEffect[j], imgUploadClasses[j]);
+    onBtnEffectClick(radiobuttonsEffect[j], IMG_UPLOAD_CLASSES[j]);
   }
 
   window.photoEdit = {
